@@ -53,10 +53,95 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: const Buttons(),
+      body: const Column(
+        // Standard IconButton
+        children: <Widget>[
+          Buttons(),
+
+          ///==============
+          ///IconButton
+          IconToggleButton(
+            isEnabled: true,
+            tooltip: 'Standard',
+          ),
+          colDivider,
+
+
+          IconToggleButton(
+            isEnabled: true,
+            tooltip: 'Standard (disabled)',
+            getDefaultStyle: enabledFilledButtonStyle ,
+          ),
+        ],
+      ),
     );
   }
 }
+
+ButtonStyle enabledFilledButtonStyle(bool selected, ColorScheme colors) {
+  return IconButton.styleFrom(
+    foregroundColor: selected ? colors.onPrimary : colors.primary,
+    backgroundColor: selected ? colors.primary : colors.surfaceVariant,
+    disabledForegroundColor: colors.onSurface.withOpacity(0.38),
+    disabledBackgroundColor: colors.onSurface.withOpacity(0.12),
+    hoverColor: selected
+        ? colors.onPrimary.withOpacity(0.08)
+        : colors.primary.withOpacity(0.08),
+    focusColor: selected
+        ? colors.onPrimary.withOpacity(0.12)
+        : colors.primary.withOpacity(0.12),
+    highlightColor: selected
+        ? colors.onPrimary.withOpacity(0.12)
+        : colors.primary.withOpacity(0.12),
+  );
+}
+
+class IconToggleButton extends StatefulWidget {
+  const IconToggleButton({
+    required this.isEnabled,
+    required this.tooltip,
+    this.getDefaultStyle,
+    super.key,
+  });
+
+  final bool isEnabled;
+  final String tooltip;
+  final ButtonStyle? Function(bool, ColorScheme)? getDefaultStyle;
+
+  @override
+  State<IconToggleButton> createState() => _IconToggleButtonState();
+}
+
+class _IconToggleButtonState extends State<IconToggleButton> {
+  bool selected = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme colors = Theme.of(context).colorScheme;
+
+    final VoidCallback? onPressed = widget.isEnabled
+        ? () {
+      setState(() {
+        selected = !selected;
+      });
+    }
+        : null;
+    ButtonStyle? style = widget.getDefaultStyle?.call(selected, colors);
+
+    return IconButton(
+      visualDensity: VisualDensity.standard,
+      isSelected: selected,
+      tooltip: widget.tooltip,
+      icon: const Icon(Icons.favorite_outline),
+      selectedIcon: const Icon(Icons.favorite),
+      onPressed: onPressed,
+      style: style,
+    );
+  }
+}
+
+
+
 class Buttons extends StatefulWidget {
   const Buttons({super.key});
 
@@ -80,6 +165,7 @@ class _ButtonsState extends State<Buttons> {
     );
   }
 }
+
 const colDivider = SizedBox(height: 10);
 class ButtonsWithoutIcon extends StatelessWidget {
   final bool isDisabled;
@@ -124,6 +210,7 @@ class ButtonsWithoutIcon extends StatelessWidget {
     );
   }
 }
+
 class ButtonsWithIcon extends StatelessWidget {
   const ButtonsWithIcon({super.key});
 
