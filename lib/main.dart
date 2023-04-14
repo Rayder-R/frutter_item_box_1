@@ -11,10 +11,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      // title: 'Flutter Demo',
       theme: ThemeData(
 
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        // colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
@@ -32,28 +32,28 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-      setState(() {
-
-      });
-  }
+  // int _counter = 0;
+  //
+  // void _incrementCounter() {
+  //     setState(() {
+  //
+  //     });
+  // }
 
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
-      appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: const Column(
+    return const Scaffold(
+      // appBar: AppBar(
+      //   // TRY THIS: Try changing the color here to a specific color (to
+      //   // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+      //   // change color while the other colors stay the same.
+      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+      //   // Here we take the value from the MyHomePage object that was created by
+      //   // the App.build method, and use it to set our appbar title.
+      //   title: Text(widget.title),
+      // ),
+      body: Column(
         // Standard IconButton
         children: <Widget>[
           Buttons(),
@@ -77,11 +77,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
-
+/// Style Button
 ButtonStyle enabledFilledButtonStyle(bool selected, ColorScheme colors) {
+  //TODO ButtonStyle in IconButton class
   return IconButton.styleFrom(
-    foregroundColor: selected ? colors.onPrimary : colors.primary,
-    backgroundColor: selected ? colors.primary : colors.surfaceVariant,
+
+    foregroundColor: selected ? Colors.red : colors.onSurfaceVariant,
+    backgroundColor: selected ? Colors.black : colors.inversePrimary,
     disabledForegroundColor: colors.onSurface.withOpacity(0.38),
     disabledBackgroundColor: colors.onSurface.withOpacity(0.12),
     hoverColor: selected
@@ -96,9 +98,14 @@ ButtonStyle enabledFilledButtonStyle(bool selected, ColorScheme colors) {
   );
 }
 
+//TODO IconToggleButton be Create State
+//TODO use a _IconToggleButtonState
+/// parent class
 class IconToggleButton extends StatefulWidget {
+
+  ///new class
   const IconToggleButton({
-    required this.isEnabled,
+    required this.isEnabled, /// require can receive null value
     required this.tooltip,
     this.getDefaultStyle,
     super.key,
@@ -112,25 +119,28 @@ class IconToggleButton extends StatefulWidget {
   State<IconToggleButton> createState() => _IconToggleButtonState();
 }
 
+/// chilled class extend State
 class _IconToggleButtonState extends State<IconToggleButton> {
-  bool selected = false;
+  bool _selected = false;
 
   @override
   Widget build(BuildContext context) {
     final ColorScheme colors = Theme.of(context).colorScheme;
 
-    final VoidCallback? onPressed = widget.isEnabled
-        ? () {
+    /// if widget.isEnabled is false, button onPressed is turn off
+    final VoidCallback? onPressed = widget.isEnabled ? () {
       setState(() {
-        selected = !selected;
+        _selected = !_selected;
       });
-    }
-        : null;
-    ButtonStyle? style = widget.getDefaultStyle?.call(selected, colors);
+    } : null;
+
+
+
+    ButtonStyle? style = widget.getDefaultStyle?.call(_selected, colors);
 
     return IconButton(
       visualDensity: VisualDensity.standard,
-      isSelected: selected,
+      isSelected: _selected,
       tooltip: widget.tooltip,
       icon: const Icon(Icons.favorite_outline),
       selectedIcon: const Icon(Icons.favorite),
@@ -138,10 +148,10 @@ class _IconToggleButtonState extends State<IconToggleButton> {
       style: style,
     );
   }
+
 }
 
 
-///++
 class Buttons extends StatefulWidget {
   const Buttons({super.key});
 
