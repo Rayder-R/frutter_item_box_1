@@ -33,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // int _counter = 0;
-  //
+
   // void _incrementCounter() {
   //     setState(() {
   //
@@ -44,15 +44,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return const Scaffold(
-      // appBar: AppBar(
-      //   // TRY THIS: Try changing the color here to a specific color (to
-      //   // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-      //   // change color while the other colors stay the same.
-      //   backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-      //   // Here we take the value from the MyHomePage object that was created by
-      //   // the App.build method, and use it to set our appbar title.
-      //   title: Text(widget.title),
-      // ),
       body: Column(
         // Standard IconButton
         children: <Widget>[
@@ -61,17 +52,17 @@ class _MyHomePageState extends State<MyHomePage> {
           ///==============
           ///IconButton
           IconToggleButton(
-            isEnabled: true,
+            isEnabled: false,
             tooltip: 'Standard',
           ),
           colDivider,
-
 
           IconToggleButton(
             isEnabled: true,
             tooltip: 'Standard (disabled)',
             getDefaultStyle: enabledFilledButtonStyle ,
           ),
+          Testclass()
         ],
       ),
     );
@@ -81,22 +72,21 @@ class _MyHomePageState extends State<MyHomePage> {
 ButtonStyle enabledFilledButtonStyle(bool selected, ColorScheme colors) {
   //TODO ButtonStyle in IconButton class
   return IconButton.styleFrom(
-
-    foregroundColor: selected ? Colors.red : colors.onSurfaceVariant,
-    backgroundColor: selected ? Colors.black : colors.inversePrimary,
-    disabledForegroundColor: colors.onSurface.withOpacity(0.38),
+    ///ICON color
+    foregroundColor: selected ? const Color.fromRGBO(246, 194, 5, 1) : Colors.white,
+    ///background color
+    backgroundColor: selected ? Colors.black12.withOpacity(0.01) : Colors.black12.withOpacity(0.03),
+    ///disable set color
+    disabledForegroundColor: colors.onSurface.withOpacity(0.0),
     disabledBackgroundColor: colors.onSurface.withOpacity(0.12),
-    hoverColor: selected
-        ? colors.onPrimary.withOpacity(0.08)
-        : colors.primary.withOpacity(0.08),
-    focusColor: selected
-        ? colors.onPrimary.withOpacity(0.12)
-        : colors.primary.withOpacity(0.12),
+    ///tap color
     highlightColor: selected
-        ? colors.onPrimary.withOpacity(0.12)
-        : colors.primary.withOpacity(0.12),
+        ? colors.onPrimary
+        : colors.onPrimary,
   );
 }
+
+
 
 //TODO IconToggleButton be Create State
 //TODO use a _IconToggleButtonState
@@ -134,8 +124,6 @@ class _IconToggleButtonState extends State<IconToggleButton> {
       });
     } : null;
 
-
-
     ButtonStyle? style = widget.getDefaultStyle?.call(_selected, colors);
 
     return IconButton(
@@ -148,6 +136,36 @@ class _IconToggleButtonState extends State<IconToggleButton> {
       style: style,
     );
   }
+}
+
+
+
+class Testclass extends StatefulWidget{
+  const Testclass({super.key});
+
+
+  @override
+  State<StatefulWidget> createState() {
+    //TODO: implement createState
+    return _Testclass();
+  }
+
+
+}
+class _Testclass extends State<Testclass>{
+
+  var count  = 0;
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return const Row(children: [
+      Text("data"),
+      IconButton(
+          onPressed: null,
+          icon: Icon(Icons.ice_skating))]);
+
+  }
+
 
 }
 
