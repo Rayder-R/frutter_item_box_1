@@ -32,13 +32,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // int _counter = 0;
-
-  // void _incrementCounter() {
-  //     setState(() {
-  //
-  //     });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +55,6 @@ class _MyHomePageState extends State<MyHomePage> {
             tooltip: 'Standard (disabled)',
             getDefaultStyle: enabledFilledButtonStyle ,
           ),
-          Testclass()
         ],
       ),
     );
@@ -140,34 +132,10 @@ class _IconToggleButtonState extends State<IconToggleButton> {
 
 
 
-class Testclass extends StatefulWidget{
-  const Testclass({super.key});
 
 
-  @override
-  State<StatefulWidget> createState() {
-    //TODO: implement createState
-    return _Testclass();
-  }
 
 
-}
-class _Testclass extends State<Testclass>{
-
-  var count  = 0;
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return const Row(children: [
-      Text("data"),
-      IconButton(
-          onPressed: null,
-          icon: Icon(Icons.ice_skating))]);
-
-  }
-
-
-}
 
 
 class Buttons extends StatefulWidget {
