@@ -8,21 +8,60 @@ class MyListView extends StatefulWidget {
     // TODO: implement createState
     return _MyListView();
   }
+
 }
 
 class _MyListView extends State<MyListView> {
-  final duplicateItems = List<String>.generate(10000, (i) => "Item $i");
-  final List MyList = List<String>.generate(100, (i) {
-    return "Item $i";
+
+
+  var initCounter = 0;
+  var plusCounter = 10;
+
+  final List MyListItems = List<String>.generate(100, (i) {
+    return "Item: $i";
+    // return Data_modle(x: 'Item: $i');
   });
+  var items = [];
 
 
-  //State狀態
+  //TODO State狀態
+  //init 是在剛開始創建State就會被呼叫一次
   @override
   void initState() {
     super.initState();
     //TODO
+    print('initState');
+    _update_listdata();
   }
+
+  void _update_listdata() {
+    //TODO setState
+    setState(() {
+        print('_update_listdata');
+        items.addAll(MyListItems.getRange(initCounter, initCounter + plusCounter));
+        initCounter = initCounter + plusCounter;
+        print(initCounter);
+        print(items);
+    });
+  }
+
+
+  // @override
+  // void setState(VoidCallback fn) {
+  //   print('setState');
+  //
+  // }
+
+
+  // @override
+  // void setState(VoidCallback fn) {
+  //   print('setState');
+  //   items.addAll(MyListItems.getRange(initCounter, initCounter + plusCounter));
+  //   initCounter = initCounter + plusCounter;
+  //   print(initCounter);
+  //   print(items);
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -30,24 +69,38 @@ class _MyListView extends State<MyListView> {
     // throw UnimplementedError();
 
     return ListView.builder(
-          // shrinkWrap: true,
-          itemCount: MyList.length,
-          itemBuilder: (context, index) {
-            return ListTile(
-              title: Text(MyList[index]),
-            );
-          },
+      // shrinkWrap: true,
+      itemCount: initCounter,
+      itemBuilder: (context, index) {
+        return
+          Container(
+          child:
+          Column(children: [
+
+            ListTile(
+              // title: Text(MyListItems[index].x.toString()),
+              title: Text(items[index]),
+            ),
+            (index+1 == initCounter) ?
+            Container(
+              child: TextButton(
+                onPressed: _update_listdata,
+                child: Text("顯示更多"),),
+            ) : Container()
+          ]
+          )
         );
-
-
+      },
+    );
   }
 }
 
-Widget box() {
-  return ListView.builder(
-      itemCount: 100,
-      itemExtent: 50.0, //强制高度为50.0
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(title: Text("$index"));
-      });
+
+
+
+class Data_modle{
+
+  final String x;
+  Data_modle({required this.x});
+
 }
