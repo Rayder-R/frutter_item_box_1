@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frutter_item_box_1/Loading_Item.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MyListView extends StatefulWidget {
   const MyListView({super.key});
@@ -17,11 +19,30 @@ class _MyListView extends State<MyListView> {
   var initCounter = 0;
   var plusCounter = 10;
 
-  final List MyListItems = List<String>.generate(100, (i) {
+  final List MyListItems = List<String>.generate(26, (i) {
     return "Item: $i";
-    // return Data_modle(x: 'Item: $i');
   });
   var items = [];
+
+
+  bool _isLoading = false;
+
+  void show() {
+    setState(() {
+      _isLoading = true;
+
+    });
+  }
+
+  Widget useLoading() {
+    return LoadingAnimationWidget.stretchedDots(color: Colors.yellow, size: 100);
+  }
+
+  void hide() {
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
 
   //TODO State狀態
@@ -34,33 +55,43 @@ class _MyListView extends State<MyListView> {
     _update_listdata();
   }
 
+
+  // ignore: unused_element
+  void _loading_item() async {
+    setState(() {
+      show();
+      print(_isLoading);
+      // const Loading_Item();
+    });
+    await Future.delayed(const Duration(seconds: 3));
+    hide();
+    print(_isLoading);
+
+  }
+
+
   void _update_listdata() {
     //TODO setState
     setState(() {
         print('_update_listdata');
+
+        if(MyListItems.length >= (items.length + plusCounter)){
         items.addAll(MyListItems.getRange(initCounter, initCounter + plusCounter));
         initCounter = initCounter + plusCounter;
+
+        }else{
+          items.addAll(MyListItems.getRange(initCounter, MyListItems.length));
+          initCounter = initCounter + (MyListItems.length - initCounter);
+
+        }
+
         print(initCounter);
         print(items);
+        print(MyListItems.length);
+
     });
+
   }
-
-
-  // @override
-  // void setState(VoidCallback fn) {
-  //   print('setState');
-  //
-  // }
-
-
-  // @override
-  // void setState(VoidCallback fn) {
-  //   print('setState');
-  //   items.addAll(MyListItems.getRange(initCounter, initCounter + plusCounter));
-  //   initCounter = initCounter + plusCounter;
-  //   print(initCounter);
-  //   print(items);
-  // }
 
 
   @override
@@ -81,12 +112,19 @@ class _MyListView extends State<MyListView> {
               // title: Text(MyListItems[index].x.toString()),
               title: Text(items[index]),
             ),
-            (index+1 == initCounter) ?
+
+            ((index+1 == initCounter) & (items.length < MyListItems.length)) ?
             Container(
               child: TextButton(
-                onPressed: _update_listdata,
-                child: Text("顯示更多"),),
-            ) : Container()
+                onPressed: _loading_item,
+                // (_isLoading)? LoadingAnimationWidget.stretchedDots(color: Colors.yellow, size: 100):,
+                child: Text("顯示更多"),
+              )
+            ) :
+            Container(),
+            (_isLoading)?
+            useLoading():
+            Container(),
           ]
           )
         );
@@ -95,12 +133,3 @@ class _MyListView extends State<MyListView> {
   }
 }
 
-
-
-
-class Data_modle{
-
-  final String x;
-  Data_modle({required this.x});
-
-}
