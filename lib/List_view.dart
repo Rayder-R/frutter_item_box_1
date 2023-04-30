@@ -63,12 +63,19 @@ class _MyListView extends State<MyListView> {
       print(_isLoading);
       // const Loading_Item();
     });
-    await Future.delayed(const Duration(seconds: 3));
-    hide();
+    await Future.delayed(const Duration(seconds: 3), hide);
+
+
+
     print(_isLoading);
 
+    print("await");
   }
 
+
+  Future<int> futureMethod1(){
+    return Future.delayed(Duration(seconds: 1), ()=>10);
+  }
 
   void _update_listdata()  {
     //TODO setState
