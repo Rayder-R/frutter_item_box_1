@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frutter_item_box_1/Loading_Item.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class MyListView extends StatefulWidget {
@@ -17,17 +16,17 @@ class _MyListView extends State<MyListView> {
 
 
   var initCounter = 0;
-  var plusCounter = 10;
+  var plusCounter = 20;
   bool _isLoading = false;
   var items = [];
 
-  List MyListItems = List<String>.generate(26, (i) {
+  List MyListItems = List<String>.generate(56, (i) {
     i = i+1; // index 0~1
     return "Item: $i";
   });
-
+  /// fallingDot | waveDots | stretchedDots
   Widget useLoading() {
-    return LoadingAnimationWidget.stretchedDots(color: Colors.yellow, size: 100);
+    return LoadingAnimationWidget.stretchedDots(color: const Color.fromRGBO(246, 194, 5, 1), size: 50);
   }
 
   void show() {
@@ -48,7 +47,7 @@ class _MyListView extends State<MyListView> {
     super.initState();
 
     print('initState()');
-    _update_listdata();
+    _get_dataModle();
 
     String message = MyListItems.length.toString();
     print("讀取資料總比數: $message");
@@ -62,10 +61,10 @@ class _MyListView extends State<MyListView> {
       print("1.setState $_isLoading");
     });
 
-    await Future.delayed(const Duration(seconds: 3), hide);
+    await Future.delayed(const Duration(seconds: 2), hide);
     print("2.setState $_isLoading");
   }
-  Future _update_dataModle() async {
+  Future _get_dataModle() async {
 
     ///讀取原本的 [MyListItems] List資料 addAll進顯示用 [items] List 資料
     Future.value(true).then((value) {
@@ -87,9 +86,9 @@ class _MyListView extends State<MyListView> {
 
   }
 
-  void _update_listdata() async {
+  void _update_data() async {
     await _loading_item();
-    _update_dataModle();
+    _get_dataModle();
   }
 
   @override
@@ -113,8 +112,10 @@ class _MyListView extends State<MyListView> {
 
             ((index+1 == initCounter) & (items.length < MyListItems.length) & (!_isLoading)) ?
             Container(
+              height: 70,
+              width: double.infinity,
               child: TextButton(
-                onPressed: _update_listdata,
+                onPressed: _update_data,
                 child: Text("顯示更多"),
               )
             ) :
