@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class MyListView extends StatefulWidget {
-  const MyListView({super.key});
+class My_ListView extends StatefulWidget {
+  const My_ListView({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -12,7 +12,7 @@ class MyListView extends StatefulWidget {
 
 }
 
-class _MyListView extends State<MyListView> {
+class _MyListView extends State<My_ListView> {
 
 
   var initCounter = 0;
